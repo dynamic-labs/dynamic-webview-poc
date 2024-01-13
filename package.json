@@ -4,12 +4,13 @@
   "license": "MIT",
   "scripts": {},
   "private": true,
-  "dependencies": {},
   "devDependencies": {
     "@nx/js": "17.2.8",
+    "@nx/react-native": "^17.2.8",
     "nx": "17.2.8"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ]
 }
