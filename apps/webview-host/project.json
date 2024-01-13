@@ -1,0 +1,79 @@
+{
+  "name": "webview-host",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/webview-host/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/webview-host",
+        "index": "apps/webview-host/src/index.html",
+        "baseHref": "/",
+        "main": "apps/webview-host/src/main.tsx",
+        "tsConfig": "apps/webview-host/tsconfig.app.json",
+        "assets": [
+          "apps/webview-host/src/favicon.ico",
+          "apps/webview-host/src/assets"
+        ],
+        "styles": ["apps/webview-host/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "apps/webview-host/webpack.config.js"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/webview-host/src/environments/environment.ts",
+              "with": "apps/webview-host/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "webview-host:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "webview-host:build:development"
+        },
+        "production": {
+          "buildTarget": "webview-host:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/webview-host/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
