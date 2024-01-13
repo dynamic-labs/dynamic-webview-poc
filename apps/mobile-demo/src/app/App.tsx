@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
+import { createClient } from 'client';
 import React from 'react';
 import {
   SafeAreaView,
@@ -7,6 +8,8 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
+
+const client = createClient();
 
 export const App = () => {
   return (
