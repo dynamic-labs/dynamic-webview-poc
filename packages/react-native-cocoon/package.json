@@ -1,0 +1,6 @@
+{
+  "name": "react-native-cocoon",
+  "peerDependencies": {
+    "react-native-webview": "^13.6.4"
+  }
+}

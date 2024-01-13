@@ -1,5 +1,7 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import { createClient } from 'client';
+import { Cocoon } from 'react-native-cocoon';
+
 import React from 'react';
 import {
   SafeAreaView,
@@ -7,9 +9,11 @@ import {
   ScrollView,
   Text,
   StatusBar,
+  View,
 } from 'react-native';
 
 const client = createClient();
+console.log('🚀 ~ client:', client);
 
 export const App = () => {
   return (
@@ -22,6 +26,9 @@ export const App = () => {
         >
           <Text>Cocoon Demo</Text>
         </ScrollView>
+        <View style={{ height: 300, width: '100%' }}>
+          <Cocoon />
+        </View>
       </SafeAreaView>
     </>
   );

@@ -11,6 +11,7 @@
     "react-native-svg": "*",
     "metro-config": "*",
     "react-native-svg-transformer": "*",
-    "tslib": "*"
+    "tslib": "*",
+    "react-native-webview": "*"
   }
 }
