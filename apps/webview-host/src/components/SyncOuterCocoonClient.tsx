@@ -10,7 +10,7 @@ export const SyncOuterCocoonClient: FC = () => {
   const wallets = useUserWallets();
 
   useEffect(() => {
-    console.log('user', user);
+    sendOutboundMessage('userChanged', [user || null]);
   }, [user]);
 
   useEffect(() => {

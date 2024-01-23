@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "client": ["packages/client/src/index.ts"],
+      "react-hooks": ["packages/react-hooks/src/index.ts"],
       "react-native-cocoon": ["packages/react-native-cocoon/src/index.ts"]
     }
   },

@@ -12,13 +12,14 @@ import {
   View,
   Button,
 } from 'react-native';
+import { DynamicClientProvider } from 'react-hooks';
+import { DisplayUser } from '../components/DisplayUser';
 
 const client = createClient();
-console.log('🚀 ~ client:', client);
 
 export const App = () => {
   return (
-    <>
+    <DynamicClientProvider client={client}>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView
@@ -33,9 +34,13 @@ export const App = () => {
           <View style={{ height: 600, width: '100%' }}>
             <Cocoon client={client} />
           </View>
+
+          <View style={{ padding: 16 }}>
+            <DisplayUser />
+          </View>
         </ScrollView>
       </SafeAreaView>
-    </>
+    </DynamicClientProvider>
   );
 };
 const styles = StyleSheet.create({
