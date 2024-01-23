@@ -1,5 +1,4 @@
 import { FC, useRef, useState } from 'react';
-import { Modal } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 export const Cocoon: FC = () => {
@@ -33,7 +32,9 @@ export const Cocoon: FC = () => {
   return (
     <WebView
       ref={webViewRef}
-      source={{ uri: 'http://localhost:4200/' }}
+      source={{
+        uri: 'https://serval-sterling-correctly.ngrok-free.app/',
+      }}
       onLoad={() => console.log('loaded')}
       injectedJavaScriptBeforeContentLoaded={`
     window.onerror = function(message, sourcefile, lineno, colno, error) {

@@ -25,10 +25,10 @@ export const App = () => {
           style={styles.scrollView}
         >
           <Text>Cocoon Demo</Text>
+          <View style={{ height: 600, width: '100%' }}>
+            <Cocoon />
+          </View>
         </ScrollView>
-        <View style={{ height: 300, width: '100%' }}>
-          <Cocoon />
-        </View>
       </SafeAreaView>
     </>
   );
