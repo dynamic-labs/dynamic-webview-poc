@@ -1,37 +1,46 @@
-import { FC, useRef, useState } from 'react';
-import { WebView } from 'react-native-webview';
+import { FC, useEffect, useRef } from 'react';
+import { WebView, WebViewMessageEvent } from 'react-native-webview';
+import type { Client, WebViewOutboundEventEmitter } from 'client';
 
-export const Cocoon: FC = () => {
+type CocoonProps<TClient extends Client = Client> = {
+  client: TClient;
+};
+
+export const Cocoon: FC<CocoonProps> = ({ client }) => {
   const webViewRef = useRef<WebView | null>(null);
-  const [visible, setVisible] = useState<boolean>(false);
+  const webViewOutboundEventEmitterRef =
+    useRef<WebViewOutboundEventEmitter | null>(null);
+  // const [visible, setVisible] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   const showCocoonHandler = () => setVisible(true);
+  useEffect(() => {
+    client.extend((client, core) => {
+      webViewOutboundEventEmitterRef.current = core.webViewOutboundEventEmitter;
 
-  //   clientEventEmitter.on('showCocoon', showCocoonHandler);
+      return client;
+    });
+  }, [client]);
 
-  //   return () => {
-  //     clientEventEmitter.removeListener('showCocoon', showCocoonHandler);
-  //   };
-  // }, []);
+  const onMessage = (event: WebViewMessageEvent) => {
+    let parsedData = null;
 
-  // useEffect(() => {
-  //   const sendMessageHandler = () => {
-  //     if (webViewRef?.current) {
-  //       webViewRef?.current?.postMessage('Hi to React - from React native');
-  //     }
-  //   };
+    try {
+      parsedData = JSON.parse(event.nativeEvent.data);
+    } catch (err) {
+      console.log('error parsing data', err);
+    }
 
-  //   clientEventEmitter.on('openAuthFlow', sendMessageHandler);
+    if (!parsedData) return;
 
-  //   return () => {
-  //     clientEventEmitter.removeListener('openAuthFlow', sendMessageHandler);
-  //   };
-  // }, []);
+    webViewOutboundEventEmitterRef.current?.emit(
+      parsedData.handler,
+      ...(parsedData.data as unknown[])
+    );
+  };
 
   return (
     <WebView
       ref={webViewRef}
+      webviewDebuggingEnabled
       source={{
         uri: 'https://serval-sterling-correctly.ngrok-free.app/',
       }}
@@ -43,6 +52,7 @@ export const Cocoon: FC = () => {
     };
     true;
   `}
+      onMessage={onMessage}
     />
   );
 };

@@ -10,6 +10,7 @@ import {
   Text,
   StatusBar,
   View,
+  Button,
 } from 'react-native';
 
 const client = createClient();
@@ -25,8 +26,12 @@ export const App = () => {
           style={styles.scrollView}
         >
           <Text>Cocoon Demo</Text>
+          <Button
+            title="Show auth token"
+            onPress={() => alert(client.auth.token)}
+          />
           <View style={{ height: 600, width: '100%' }}>
-            <Cocoon />
+            <Cocoon client={client} />
           </View>
         </ScrollView>
       </SafeAreaView>
