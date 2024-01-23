@@ -18,7 +18,13 @@ export const SyncOuterCocoonClient: FC = () => {
   }, [authToken]);
 
   useEffect(() => {
-    console.log('wallets', wallets);
+    sendOutboundMessage('userWalletsChanged', [
+      wallets.map((wallet) => ({
+        address: wallet.address,
+        chain: wallet.chain,
+        connected: wallet.connected,
+      })),
+    ]);
   }, [wallets]);
 
   return null;

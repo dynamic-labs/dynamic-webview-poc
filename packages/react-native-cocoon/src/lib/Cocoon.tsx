@@ -44,7 +44,6 @@ export const Cocoon: FC<CocoonProps> = ({ client }) => {
       source={{
         uri: 'https://serval-sterling-correctly.ngrok-free.app/',
       }}
-      onLoad={() => console.log('loaded')}
       injectedJavaScriptBeforeContentLoaded={`
     window.onerror = function(message, sourcefile, lineno, colno, error) {
       alert("Message: " + message + " - Source: " + sourcefile + " Line: " + lineno + ":" + colno);

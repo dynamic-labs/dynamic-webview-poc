@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { DynamicClientProvider } from 'react-hooks';
 import { DisplayUser } from '../components/DisplayUser';
+import { UserWalletsList } from '../components/UserWalletsList';
 
 const client = createClient();
 
@@ -27,16 +28,21 @@ export const App = () => {
           style={styles.scrollView}
         >
           <Text>Cocoon Demo</Text>
-          <Button
-            title="Show auth token"
-            onPress={() => alert(client.auth.token)}
-          />
           <View style={{ height: 600, width: '100%' }}>
             <Cocoon client={client} />
           </View>
 
+          <Button
+            title="Show auth token"
+            onPress={() => alert(client.auth.token)}
+          />
+
           <View style={{ padding: 16 }}>
             <DisplayUser />
+          </View>
+
+          <View style={{ padding: 16 }}>
+            <UserWalletsList />
           </View>
         </ScrollView>
       </SafeAreaView>
