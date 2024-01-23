@@ -1,20 +1,20 @@
 import { ChangeNotifier } from '../utils/ChangeNotifier';
 import { WebViewOutboundEventEmitter } from './WebViewOutboundEventEmitter';
 
-export class AuthModule extends ChangeNotifier {
+export class UserModule extends ChangeNotifier {
   constructor(webViewOutboundEventEmitter: WebViewOutboundEventEmitter) {
     super();
 
-    webViewOutboundEventEmitter.on('authTokenChanged', (token) => {
-      this._token = token;
+    webViewOutboundEventEmitter.on('userChanged', (user) => {
+      this._user = user;
 
       this.notifyListeners();
     });
   }
 
-  private _token: string | null = null;
+  private _user: unknown | undefined;
 
-  public get token(): string | null {
-    return this._token;
+  public get user(): unknown | unknown {
+    return this._user;
   }
 }
