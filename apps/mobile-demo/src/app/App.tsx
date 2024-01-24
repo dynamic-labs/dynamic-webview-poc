@@ -1,13 +1,12 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import { createClient } from 'client';
-import { Cocoon } from 'react-native-cocoon';
+import { DynamicCocoon } from 'react-native-cocoon';
 
 import React from 'react';
 import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
-  Text,
   StatusBar,
   View,
   Button,
@@ -16,6 +15,7 @@ import { DynamicClientProvider } from 'react-hooks';
 import { DisplayUser } from '../components/DisplayUser';
 import { UserWalletsList } from '../components/UserWalletsList';
 
+// Client
 const client = createClient();
 
 export const App = () => {
@@ -27,9 +27,8 @@ export const App = () => {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}
         >
-          <Text>Cocoon Demo</Text>
           <View style={{ height: 600, width: '100%' }}>
-            <Cocoon client={client} />
+            <DynamicCocoon client={client} />
           </View>
 
           <Button
@@ -49,6 +48,7 @@ export const App = () => {
     </DynamicClientProvider>
   );
 };
+
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: '#ffffff',

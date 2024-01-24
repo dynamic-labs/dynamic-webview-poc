@@ -4,10 +4,14 @@ import { AuthModule } from './modules/AuthModule';
 import { Extendable } from './utils/Extendable';
 import { UserModule } from './modules/UserModule';
 import { UserWalletsModule } from './modules/UserWalletsModule';
+import { WebViewInboundEventEmitter } from './modules/WebViewInboundEventEmitter';
 
-class Core {
+export class Core {
   public webViewOutboundEventEmitter: WebViewOutboundEventEmitter =
     new EventEmitter();
+
+  public webViewInboundEventEmitter: WebViewInboundEventEmitter =
+    new WebViewInboundEventEmitter();
 }
 
 class Client extends Extendable<Core> {
@@ -20,7 +24,7 @@ class Client extends Extendable<Core> {
 
     this.auth = new AuthModule(core.webViewOutboundEventEmitter);
     this.user = new UserModule(core.webViewOutboundEventEmitter);
-    this.userWallets = new UserWalletsModule(core.webViewOutboundEventEmitter);
+    this.userWallets = new UserWalletsModule(core);
   }
 }
 

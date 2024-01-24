@@ -2,11 +2,11 @@ import { FC, useEffect, useRef } from 'react';
 import { WebView, WebViewMessageEvent } from 'react-native-webview';
 import type { Client, WebViewOutboundEventEmitter } from 'client';
 
-type CocoonProps<TClient extends Client = Client> = {
+type DynamicCocoonProps<TClient extends Client = Client> = {
   client: TClient;
 };
 
-export const Cocoon: FC<CocoonProps> = ({ client }) => {
+export const DynamicCocoon: FC<DynamicCocoonProps> = ({ client }) => {
   const webViewRef = useRef<WebView | null>(null);
   const webViewOutboundEventEmitterRef =
     useRef<WebViewOutboundEventEmitter | null>(null);
@@ -15,6 +15,27 @@ export const Cocoon: FC<CocoonProps> = ({ client }) => {
   useEffect(() => {
     client.extend((client, core) => {
       webViewOutboundEventEmitterRef.current = core.webViewOutboundEventEmitter;
+
+      return client;
+    });
+  }, [client]);
+
+  useEffect(() => {
+    const webView = webViewRef.current;
+
+    if (!webView) return;
+
+    client.extend((client, core) => {
+      core.webViewInboundEventEmitter.onAny((event, ...args) => {
+        webView.requestFocus();
+
+        webView.postMessage(
+          JSON.stringify({
+            handler: event,
+            data: args,
+          })
+        );
+      });
 
       return client;
     });
@@ -55,5 +76,3 @@ export const Cocoon: FC<CocoonProps> = ({ client }) => {
     />
   );
 };
-
-export default Cocoon;

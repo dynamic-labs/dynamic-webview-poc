@@ -1,13 +1,11 @@
 import { Wallet } from '../classes/Wallet';
+import type { Core } from '../client';
 import { ChangeNotifier } from '../utils/ChangeNotifier';
-import { WebViewOutboundEventEmitter } from './WebViewOutboundEventEmitter';
 
 export class UserWalletsModule extends ChangeNotifier {
   private _wallets: Wallet[] = [];
 
-  constructor(
-    private readonly webViewOutboundEventEmitter: WebViewOutboundEventEmitter
-  ) {
+  constructor(private readonly core: Core) {
     super();
 
     this.initEventListener();
@@ -18,10 +16,13 @@ export class UserWalletsModule extends ChangeNotifier {
   }
 
   private initEventListener() {
-    this.webViewOutboundEventEmitter.on('userWalletsChanged', (wallets) => {
-      this._wallets = wallets.map(Wallet.fromJson);
+    this.core.webViewOutboundEventEmitter.on(
+      'userWalletsChanged',
+      (wallets) => {
+        this._wallets = wallets.map((json) => Wallet.fromJson(this.core, json));
 
-      this.notifyListeners();
-    });
+        this.notifyListeners();
+      }
+    );
   }
 }

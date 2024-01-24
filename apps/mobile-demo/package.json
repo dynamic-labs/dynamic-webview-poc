@@ -13,6 +13,8 @@
     "react-native-svg-transformer": "*",
     "tslib": "*",
     "react-native-webview": "*",
-    "eventemitter3": "*"
+    "eventemitter3": "*",
+    "viem": "*",
+    "fast-text-encoding": "*"
   }
 }

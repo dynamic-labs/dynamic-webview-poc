@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { useUserWallets } from 'react-hooks';
 import { View, Text } from 'react-native';
+import { WalletButtonItem } from './WalletButtonItem';
 
 export const UserWalletsList: FC = () => {
   const userWallets = useUserWallets();
@@ -22,11 +23,7 @@ export const UserWalletsList: FC = () => {
         }}
       >
         {userWallets.map((wallet) => (
-          <View key={wallet.address}>
-            <Text>Address: {wallet.address}</Text>
-            <Text>Chain: {wallet.chain}</Text>
-            <Text>Connected: {JSON.stringify(wallet.connected)}</Text>
-          </View>
+          <WalletButtonItem key={wallet.address} wallet={wallet} />
         ))}
       </View>
     </View>

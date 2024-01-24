@@ -4,6 +4,7 @@ import {
 } from '@dynamic-labs/sdk-react-core';
 import { EthereumWalletConnectors } from '@dynamic-labs/ethereum';
 import { SyncOuterCocoonClient } from '../components/SyncOuterCocoonClient';
+import { InboundMessageHandler } from '../components/InboundMessageHandler';
 
 export function App() {
   return (
@@ -16,6 +17,7 @@ export function App() {
       <DynamicWidget />
 
       <SyncOuterCocoonClient />
+      <InboundMessageHandler />
     </DynamicContextProvider>
   );
 }

@@ -6,6 +6,8 @@ export type WebViewOutboundEvents = {
   userWalletsChanged: (
     wallets: { address: string; chain: string; connected: boolean }[]
   ) => void;
+  requestRpcReject: (props: { id: string; data: unknown }) => void;
+  requestRpcResolve: (props: { id: string; data: unknown }) => void;
 };
 
 export type WebViewOutboundEventEmitter = EventEmitter<WebViewOutboundEvents>;
