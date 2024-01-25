@@ -2,7 +2,7 @@
 import { createClient } from 'client';
 import { DynamicCocoon } from 'react-native-cocoon';
 
-import React from 'react';
+import React, { FC } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -11,49 +11,54 @@ import {
   View,
   Button,
 } from 'react-native';
-import { DynamicClientProvider } from 'react-hooks';
+import { DynamicClientProvider, useToken } from 'react-hooks';
 import { DisplayUser } from '../components/DisplayUser';
 import { UserWalletsList } from '../components/UserWalletsList';
 
-// Client
 const client = createClient();
+
+const LoginView: FC = () => {
+  return <Button title="Login" onPress={() => client.auth.open()} />;
+};
+
+const MyAppView: FC = () => {
+  const token = useToken();
+
+  if (!token) {
+    return <LoginView />;
+  }
+
+  return (
+    <View>
+      <Button title="Logout" onPress={() => client.auth.logout()} />
+
+      <Button
+        title="Show auth token"
+        onPress={() => alert(client.auth.token)}
+      />
+
+      <View style={{ padding: 16 }}>
+        <DisplayUser />
+      </View>
+
+      <View style={{ padding: 16 }}>
+        <UserWalletsList />
+      </View>
+    </View>
+  );
+};
 
 export const App = () => {
   return (
     <DynamicClientProvider client={client}>
+      <DynamicCocoon client={client} />
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}
         >
-          <View style={{ height: 600, width: '100%' }}>
-            <DynamicCocoon client={client} />
-          </View>
-
-          <Button
-            title="Authenticated"
-            onPress={() =>
-              client.auth
-                .open()
-                .then((user) => alert(JSON.stringify(user, null, 2)))
-            }
-          />
-
-          <Button title="Logout" onPress={() => client.auth.logout()} />
-
-          <Button
-            title="Show auth token"
-            onPress={() => alert(client.auth.token)}
-          />
-
-          <View style={{ padding: 16 }}>
-            <DisplayUser />
-          </View>
-
-          <View style={{ padding: 16 }}>
-            <UserWalletsList />
-          </View>
+          <MyAppView />
         </ScrollView>
       </SafeAreaView>
     </DynamicClientProvider>

@@ -9,6 +9,7 @@ export type WebViewOutboundEvents = {
   requestRpcReject: (props: { id: string; data: unknown }) => void;
   requestRpcResolve: (props: { id: string; data: unknown }) => void;
   showAuthFlowChanged: (showAuthFlow: boolean) => void;
+  modalDisplayChanged: (modalId: string, open: boolean) => void;
 };
 
 export type WebViewOutboundEventEmitter = EventEmitter<WebViewOutboundEvents>;

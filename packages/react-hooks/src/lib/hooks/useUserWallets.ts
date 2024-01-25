@@ -6,5 +6,5 @@ export const useUserWallets = () => {
 
   useChangeNotifier(client.userWallets);
 
-  return client.userWallets.wallets;
+  return client.userWallets.data;
 };

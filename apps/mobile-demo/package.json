@@ -15,6 +15,7 @@
     "react-native-webview": "*",
     "eventemitter3": "*",
     "viem": "*",
-    "fast-text-encoding": "*"
+    "fast-text-encoding": "*",
+    "react-native-safe-area-context": "*"
   }
 }

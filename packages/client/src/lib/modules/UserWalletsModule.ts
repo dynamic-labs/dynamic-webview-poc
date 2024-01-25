@@ -11,7 +11,7 @@ export class UserWalletsModule extends ChangeNotifier {
     this.initEventListener();
   }
 
-  public get wallets() {
+  public get data() {
     return this._wallets;
   }
 
