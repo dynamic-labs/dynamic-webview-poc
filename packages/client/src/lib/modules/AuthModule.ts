@@ -41,6 +41,10 @@ export class AuthModule extends ChangeNotifier {
     });
   }
 
+  public logout() {
+    this.core.webViewInboundEventEmitter.send('logout');
+  }
+
   private initEventListeners() {
     this.core.webViewOutboundEventEmitter.on('authTokenChanged', (token) => {
       this._token = token;

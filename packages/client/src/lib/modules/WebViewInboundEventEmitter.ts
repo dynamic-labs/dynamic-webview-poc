@@ -5,6 +5,7 @@ export type WebViewInboundEvents = {
     args: unknown[];
   }) => Promise<string>;
   setShowAuthFlow: (showAuthFlow: boolean) => void;
+  logout: () => void;
 };
 
 export class WebViewInboundEventEmitter {

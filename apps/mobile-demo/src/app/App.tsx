@@ -40,6 +40,8 @@ export const App = () => {
             }
           />
 
+          <Button title="Logout" onPress={() => client.auth.logout()} />
+
           <Button
             title="Show auth token"
             onPress={() => alert(client.auth.token)}

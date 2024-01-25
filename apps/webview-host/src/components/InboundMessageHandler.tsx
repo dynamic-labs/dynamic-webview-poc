@@ -8,7 +8,7 @@ import { sendOutboundMessage } from '../utils/sendOutboundMessage';
 import { WalletClient } from 'viem';
 
 export const InboundMessageHandler: FC = () => {
-  const { setShowAuthFlow } = useDynamicContext();
+  const { setShowAuthFlow, handleLogOut } = useDynamicContext();
   const wallets = useUserWallets();
 
   useEffect(() => {
@@ -16,6 +16,10 @@ export const InboundMessageHandler: FC = () => {
       setShowAuthFlow(show);
     });
   }, [setShowAuthFlow]);
+
+  useEffect(() => {
+    return onInboundMessage('logout', () => handleLogOut());
+  }, [handleLogOut]);
 
   useEffect(() => {
     return onInboundMessage('requestRpc', async ({ id, address, args }) => {
