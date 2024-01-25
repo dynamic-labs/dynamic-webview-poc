@@ -22,7 +22,7 @@ class Client extends Extendable<Core> {
   constructor(core: Core) {
     super(core);
 
-    this.auth = new AuthModule(core.webViewOutboundEventEmitter);
+    this.auth = new AuthModule(core);
     this.user = new UserModule(core.webViewOutboundEventEmitter);
     this.userWallets = new UserWalletsModule(core);
   }

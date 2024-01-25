@@ -1,20 +1,51 @@
+import type { Core } from '../client';
 import { ChangeNotifier } from '../utils/ChangeNotifier';
-import { WebViewOutboundEventEmitter } from './WebViewOutboundEventEmitter';
 
 export class AuthModule extends ChangeNotifier {
-  constructor(webViewOutboundEventEmitter: WebViewOutboundEventEmitter) {
+  constructor(private readonly core: Core) {
     super();
 
-    webViewOutboundEventEmitter.on('authTokenChanged', (token) => {
-      this._token = token;
-
-      this.notifyListeners();
-    });
+    this.initEventListeners();
   }
 
   private _token: string | null = null;
 
   public get token(): string | null {
     return this._token;
+  }
+
+  public open(): Promise<unknown> {
+    return new Promise((resolve, reject) => {
+      let user: unknown = null;
+
+      this.core.webViewInboundEventEmitter.send('setShowAuthFlow', true);
+
+      this.core.webViewOutboundEventEmitter.on('userChanged', (u) => {
+        user = u;
+      });
+
+      this.core.webViewOutboundEventEmitter.on(
+        'showAuthFlowChanged',
+        (showAuthFlow) => {
+          if (showAuthFlow) return;
+
+          if (user) {
+            resolve(user);
+          } else {
+            reject();
+          }
+
+          return;
+        }
+      );
+    });
+  }
+
+  private initEventListeners() {
+    this.core.webViewOutboundEventEmitter.on('authTokenChanged', (token) => {
+      this._token = token;
+
+      this.notifyListeners();
+    });
   }
 }

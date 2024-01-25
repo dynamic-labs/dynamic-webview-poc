@@ -32,6 +32,15 @@ export const App = () => {
           </View>
 
           <Button
+            title="Authenticated"
+            onPress={() =>
+              client.auth
+                .open()
+                .then((user) => alert(JSON.stringify(user, null, 2)))
+            }
+          />
+
+          <Button
             title="Show auth token"
             onPress={() => alert(client.auth.token)}
           />

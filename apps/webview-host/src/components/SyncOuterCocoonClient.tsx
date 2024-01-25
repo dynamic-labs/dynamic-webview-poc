@@ -6,7 +6,7 @@ import { FC, useEffect } from 'react';
 import { sendOutboundMessage } from '../utils/sendOutboundMessage';
 
 export const SyncOuterCocoonClient: FC = () => {
-  const { user, authToken } = useDynamicContext();
+  const { user, authToken, showAuthFlow } = useDynamicContext();
   const wallets = useUserWallets();
 
   useEffect(() => {
@@ -26,6 +26,10 @@ export const SyncOuterCocoonClient: FC = () => {
       })),
     ]);
   }, [wallets]);
+
+  useEffect(() => {
+    sendOutboundMessage('showAuthFlowChanged', [showAuthFlow]);
+  }, [showAuthFlow]);
 
   return null;
 };

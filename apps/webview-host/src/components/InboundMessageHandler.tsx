@@ -1,15 +1,24 @@
-import { useUserWallets } from '@dynamic-labs/sdk-react-core';
+import {
+  useDynamicContext,
+  useUserWallets,
+} from '@dynamic-labs/sdk-react-core';
 import { WebViewInboundEvents } from 'client';
 import { FC, useEffect } from 'react';
 import { sendOutboundMessage } from '../utils/sendOutboundMessage';
 import { WalletClient } from 'viem';
 
 export const InboundMessageHandler: FC = () => {
+  const { setShowAuthFlow } = useDynamicContext();
   const wallets = useUserWallets();
 
   useEffect(() => {
+    return onInboundMessage('setShowAuthFlow', (show: boolean) => {
+      setShowAuthFlow(show);
+    });
+  }, [setShowAuthFlow]);
+
+  useEffect(() => {
     return onInboundMessage('requestRpc', async ({ id, address, args }) => {
-      console.log({ id, address, args });
       try {
         const wallet = wallets.find((wallet) => wallet.address === address);
 
@@ -26,16 +35,9 @@ export const InboundMessageHandler: FC = () => {
         const signer = await wallet.connector.getWalletClient<
           Promise<WalletClient>
         >();
-        console.log('🚀 ~ returnonInboundMessage ~ signer:', signer);
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const data = await signer.transport.request(args as any);
-        console.log('🚀 ~ returnonInboundMessage ~ data:', data);
-
-        // const signedMessage = await signer.signMessage({
-        //   message,
-        //   account: signer.account || (address as Hex),
-        // });
 
         sendOutboundMessage('requestRpcResolve', [
           {
